@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/godaddy/docker-node/tree/master.svg?style=svg)](https://circleci.com/gh/godaddy/docker-node/tree/master)
+
 # docker-node
 
 Debian-based Docker images for Node.js with best practices in mind:
