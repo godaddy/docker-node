@@ -10,6 +10,10 @@ dependencies:
     - cd generated-dockerfiles/debian/8.9.4-debian && docker build -t godaddy/node:8.9.4-debian .;
     - cd generated-dockerfiles/debian/9.3.0-debian && docker build -t godaddy/node:9.3.0-debian .;
 
+test:
+  override:
+    - echo "tests to be added later"
+
 deployment:
   hub:
     tag: /v[0-9]+(\.[0-9]+)*/
