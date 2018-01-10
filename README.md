@@ -2,14 +2,10 @@
 
 # docker-node
 
-Linux Docker images for Node.js with [best practices](https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/) in mind:
+Debian Docker images for Node.js with [best practices](https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/) in mind:
 
 * proper signal-forwarding for `su` and `sudo`,
 * using unprivileged users for running apps.
-
-Currently supported Linux distributions:
-
-* Debian
 
 # Usage
 
