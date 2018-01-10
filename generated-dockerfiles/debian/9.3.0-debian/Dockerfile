@@ -33,7 +33,7 @@ COPY base-entrypoint.sh /
 RUN chmod +x /base-entrypoint.sh
 
 # this will be the entrypoint script for the child container
-COPY docker-entrypoint.sh /
+ONBUILD COPY docker-entrypoint.sh /
 
 # this will handle creating the user/group and running the docker-entrypoint.sh
 # provided by the child image
