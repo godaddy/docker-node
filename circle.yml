@@ -8,7 +8,7 @@ dependencies:
   override:
     - docker info
     - cd generated-dockerfiles/debian/8.9.4-debian && docker build -t godaddy/node:8.9.4-debian .;
-    - cd generated-dockerfiles/debian/9.3.0-debian && docker build -t godaddy/node:9.3.0-debian .;
+    - cd generated-dockerfiles/debian/9.4.0-debian && docker build -t godaddy/node:9.4.0-debian .;
 
 test:
   override:
@@ -20,4 +20,4 @@ deployment:
     commands:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
       - cd generated-dockerfiles/debian/8.9.4-debian && docker push godaddy/node:8.9.4-debian;
-      - cd generated-dockerfiles/debian/9.3.0-debian && docker push godaddy/node:9.3.0-debian;
+      - cd generated-dockerfiles/debian/9.4.0-debian && docker push godaddy/node:9.4.0-debian;

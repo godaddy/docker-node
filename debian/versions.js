@@ -6,7 +6,7 @@ module.exports = [
     ]
   },
   {
-    nodeVersion: '9.3.0',
+    nodeVersion: '9.4.0',
     additionalFiles: [
       'base-entrypoint.sh'
     ]
