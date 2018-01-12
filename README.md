@@ -16,7 +16,6 @@ FROM godaddy/node:8.9.4-debian
 
 ENV NODE_ENV=production # or anything else
 
-USER node
 RUN mkdir /app
 WORKDIR /app
 
@@ -26,9 +25,7 @@ RUN npm install
 
 # Copy app to source directory
 COPY docker/docker-entrypoint.sh /docker-entrypoint.sh
-COPY . /app
-
-USER root
+COPY . /app/
 
 EXPOSE 8080
 CMD ["gosu", "node", "npm", "start"]
