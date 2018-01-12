@@ -16,7 +16,10 @@ FROM godaddy/node:8.9.4-debian
 
 ENV NODE_ENV=production # or anything else
 
+USER node
+RUN mkdir /app
 WORKDIR /app
+
 COPY docker/.npmrc package.json package-lock.json /app/
 
 RUN npm install
@@ -25,8 +28,10 @@ RUN npm install
 COPY docker/docker-entrypoint.sh /docker-entrypoint.sh
 COPY . /app
 
+USER root
+
 EXPOSE 8080
-CMD ["gosu", "alone", "npm", "start"]
+CMD ["gosu", "node", "npm", "start"]
 ```
 
 ## Docker-entrypoint.sh
@@ -37,8 +42,6 @@ CMD ["gosu", "alone", "npm", "start"]
 # here you can customize how your app should start up
 set -e
 
-cd /app
-chown alone:alone /app
 exec "$@"
 ```
 
