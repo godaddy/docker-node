@@ -32,8 +32,8 @@ dockerTemplates.forEach((templatePath) => {
       nodeVersion: version.nodeVersion
     });
 
-    circleDependencies.push(`- cd generated-dockerfiles/${linuxDistributionName}/${tag} && docker build -t godaddy/node:${tag} .;`);
-    circleDeployments.push(`- cd generated-dockerfiles/${linuxDistributionName}/${tag} && docker push godaddy/node:${tag};`);
+    circleDependencies.push(`- version=$(node -pe "($(cat package.json)).version"); cd generated-dockerfiles/${linuxDistributionName}/${tag} && docker build -t godaddy/node:${tag}-$version .;`);
+    circleDeployments.push(`- version=$(node -pe "($(cat package.json)).version"); cd generated-dockerfiles/${linuxDistributionName}/${tag} && docker push godaddy/node:${tag}-$version;`);
 
     mkdirp.sync(dockerFileLocation);
 
