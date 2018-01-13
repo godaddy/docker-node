@@ -7,8 +7,8 @@ machine:
 dependencies:
   override:
     - docker info
-    - cd generated-dockerfiles/debian/8.9.4-debian && docker build -t godaddy/node:8.9.4-debian .;
-    - cd generated-dockerfiles/debian/9.4.0-debian && docker build -t godaddy/node:9.4.0-debian .;
+    - version=$(node -pe "($(cat package.json)).version"); cd generated-dockerfiles/debian/8.9.4-debian && docker build -t godaddy/node:8.9.4-debian-$version .;
+    - version=$(node -pe "($(cat package.json)).version"); cd generated-dockerfiles/debian/9.4.0-debian && docker build -t godaddy/node:9.4.0-debian-$version .;
 
 test:
   override:
@@ -19,5 +19,5 @@ deployment:
     tag: /v[0-9]+(\.[0-9]+)*/
     commands:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-      - cd generated-dockerfiles/debian/8.9.4-debian && docker push godaddy/node:8.9.4-debian;
-      - cd generated-dockerfiles/debian/9.4.0-debian && docker push godaddy/node:9.4.0-debian;
+      - version=$(node -pe "($(cat package.json)).version"); cd generated-dockerfiles/debian/8.9.4-debian && docker push godaddy/node:8.9.4-debian-$version;
+      - version=$(node -pe "($(cat package.json)).version"); cd generated-dockerfiles/debian/9.4.0-debian && docker push godaddy/node:9.4.0-debian-$version;
