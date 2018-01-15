@@ -8,13 +8,6 @@ ENV APP_GROUP_ID=999
 # get su-exec for easy sudos
 RUN apk add --no-cache 'su-exec>=0.2'
 
-# create directory to host application files
-RUN mkdir -p /home/alone/app
-
-# this will be mounted as a volume in the build process
-WORKDIR /home/alone/app
-
-# base-entrypoint allows us to create a user/group with configureable UID/GID
 COPY base-entrypoint.sh /
 
 # make sure we can execute base-entrypoint.sh
@@ -23,7 +16,7 @@ RUN chmod +x /base-entrypoint.sh
 # this will be the entrypoint script for our container
 ONBUILD COPY docker-entrypoint.sh /
 
-# this will handle creating the user/group and running the docker-entrypoint.sh
+# this will handle updating the node uid/gid and running the docker-entrypoint.sh
 # provided by the child image
 ENTRYPOINT ["/base-entrypoint.sh"]
 
