@@ -7,6 +7,8 @@ machine:
 dependencies:
   override:
     - docker info
+    - version=$(node -pe "($(cat package.json)).version"); cd generated-dockerfiles/alpine/8.9.4-alpine && docker build -t godaddy/node:8.9.4-alpine-$version .;
+    - version=$(node -pe "($(cat package.json)).version"); cd generated-dockerfiles/alpine/9.4.0-alpine && docker build -t godaddy/node:9.4.0-alpine-$version .;
     - version=$(node -pe "($(cat package.json)).version"); cd generated-dockerfiles/debian/8.9.4-debian && docker build -t godaddy/node:8.9.4-debian-$version .;
     - version=$(node -pe "($(cat package.json)).version"); cd generated-dockerfiles/debian/9.4.0-debian && docker build -t godaddy/node:9.4.0-debian-$version .;
 
@@ -19,5 +21,7 @@ deployment:
     tag: /v[0-9]+(\.[0-9]+)*/
     commands:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - version=$(node -pe "($(cat package.json)).version"); cd generated-dockerfiles/alpine/8.9.4-alpine && docker push godaddy/node:8.9.4-alpine-$version;
+      - version=$(node -pe "($(cat package.json)).version"); cd generated-dockerfiles/alpine/9.4.0-alpine && docker push godaddy/node:9.4.0-alpine-$version;
       - version=$(node -pe "($(cat package.json)).version"); cd generated-dockerfiles/debian/8.9.4-debian && docker push godaddy/node:8.9.4-debian-$version;
       - version=$(node -pe "($(cat package.json)).version"); cd generated-dockerfiles/debian/9.4.0-debian && docker push godaddy/node:9.4.0-debian-$version;
