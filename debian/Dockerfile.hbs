@@ -20,13 +20,7 @@ RUN set -x \
     && gosu nobody true \
     && apt-get purge -y --auto-remove ca-certificates wget
 
-# create directory to host application files
-RUN mkdir -p /home/alone/app
-
-# this will be mounted as a volume in the build process
-WORKDIR /home/alone/app
-
-# base-entrypoint allows us to create a user/group with configureable UID/GID
+# base-entrypoint allows us to update the node uid/gid
 COPY base-entrypoint.sh /
 
 # make sure we can execute base-entrypoint.sh
@@ -35,7 +29,7 @@ RUN chmod +x /base-entrypoint.sh
 # this will be the entrypoint script for the child container
 ONBUILD COPY docker-entrypoint.sh /
 
-# this will handle creating the user/group and running the docker-entrypoint.sh
+# this will handle updating the node uid/gid and running the docker-entrypoint.sh
 # provided by the child image
 ENTRYPOINT ["/base-entrypoint.sh"]
 
