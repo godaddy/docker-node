@@ -16,6 +16,7 @@ const circleDeployments = [];
 
 // cleanup
 rimraf.sync(GENERATED_DOCKERFILES_PATH);
+rimraf.sync('./.circleci');
 
 // regenerate
 dockerTemplates.forEach((templatePath) => {
@@ -32,8 +33,8 @@ dockerTemplates.forEach((templatePath) => {
       nodeVersion: version.nodeVersion
     });
 
-    circleDependencies.push(`- version=$(node -pe "($(cat package.json)).version"); cd generated-dockerfiles/${linuxDistributionName}/${tag} && docker build -t godaddy/node:${tag}-$version .;`);
-    circleDeployments.push(`- version=$(node -pe "($(cat package.json)).version"); cd generated-dockerfiles/${linuxDistributionName}/${tag} && docker push godaddy/node:${tag}-$version;`);
+    circleDependencies.push(`version=$(node -pe "($(cat package.json)).version"); cd generated-dockerfiles/${linuxDistributionName}/${tag} && docker build -t godaddy/node:${tag}-$version .;`);
+    circleDeployments.push(`version=$(node -pe "($(cat package.json)).version"); cd generated-dockerfiles/${linuxDistributionName}/${tag} && docker push godaddy/node:${tag}-$version;`);
 
     mkdirp.sync(dockerFileLocation);
 
@@ -52,4 +53,5 @@ const circleYml = circleTemplate({
   dependencies: circleDependencies
 });
 
-fs.writeFileSync('./circle.yml', circleYml);
+mkdirp.sync('./.circleci');
+fs.writeFileSync('./.circleci/config.yml', circleYml);
