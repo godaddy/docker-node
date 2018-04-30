@@ -1,12 +1,12 @@
 module.exports = [
   {
-    nodeVersion: '8.11.0',
+    nodeVersion: '8.11.1',
     additionalFiles: [
       'base-entrypoint.sh'
     ]
   },
   {
-    nodeVersion: '9.10.0',
+    nodeVersion: '10.0.0',
     additionalFiles: [
       'base-entrypoint.sh'
     ]
