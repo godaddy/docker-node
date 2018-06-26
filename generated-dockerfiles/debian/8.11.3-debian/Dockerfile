@@ -1,4 +1,4 @@
-FROM node:10.3.0-slim
+FROM node:8.11.3-slim
 
 ENV NPM_CONFIG_LOGLEVEL=warn
 ENV NODE_ENV=dev
