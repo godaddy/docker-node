@@ -7,10 +7,10 @@ jobs:
     steps:
       - setup_remote_docker
       - checkout
-      - run: version=$(node -pe "($(cat package.json)).version"); cd generated-dockerfiles/alpine/8.11.3-alpine && docker build -t godaddy/node:8.11.3-alpine-$version .;
-      - run: version=$(node -pe "($(cat package.json)).version"); cd generated-dockerfiles/alpine/10.5.0-alpine && docker build -t godaddy/node:10.5.0-alpine-$version .;
-      - run: version=$(node -pe "($(cat package.json)).version"); cd generated-dockerfiles/debian/8.11.3-debian && docker build -t godaddy/node:8.11.3-debian-$version .;
-      - run: version=$(node -pe "($(cat package.json)).version"); cd generated-dockerfiles/debian/10.5.0-debian && docker build -t godaddy/node:10.5.0-debian-$version .;
+      - run: version=$(node -p "($(cat package.json)).version"); cd generated-dockerfiles/alpine/8.11.3-alpine && docker build -t godaddy/node:8.11.3-alpine-$version .;
+      - run: version=$(node -p "($(cat package.json)).version"); cd generated-dockerfiles/alpine/10.5.0-alpine && docker build -t godaddy/node:10.5.0-alpine-$version .;
+      - run: version=$(node -p "($(cat package.json)).version"); cd generated-dockerfiles/debian/8.11.3-debian && docker build -t godaddy/node:8.11.3-debian-$version .;
+      - run: version=$(node -p "($(cat package.json)).version"); cd generated-dockerfiles/debian/10.5.0-debian && docker build -t godaddy/node:10.5.0-debian-$version .;
 
   deploy:
     docker:
@@ -21,10 +21,10 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run: version=$(node -pe "($(cat package.json)).version"); cd generated-dockerfiles/alpine/8.11.3-alpine && docker push godaddy/node:8.11.3-alpine-$version;
-      - run: version=$(node -pe "($(cat package.json)).version"); cd generated-dockerfiles/alpine/10.5.0-alpine && docker push godaddy/node:10.5.0-alpine-$version;
-      - run: version=$(node -pe "($(cat package.json)).version"); cd generated-dockerfiles/debian/8.11.3-debian && docker push godaddy/node:8.11.3-debian-$version;
-      - run: version=$(node -pe "($(cat package.json)).version"); cd generated-dockerfiles/debian/10.5.0-debian && docker push godaddy/node:10.5.0-debian-$version;
+      - run: version=$(node -p "($(cat package.json)).version"); cd generated-dockerfiles/alpine/8.11.3-alpine && docker push godaddy/node:8.11.3-alpine-$version;
+      - run: version=$(node -p "($(cat package.json)).version"); cd generated-dockerfiles/alpine/10.5.0-alpine && docker push godaddy/node:10.5.0-alpine-$version;
+      - run: version=$(node -p "($(cat package.json)).version"); cd generated-dockerfiles/debian/8.11.3-debian && docker push godaddy/node:8.11.3-debian-$version;
+      - run: version=$(node -p "($(cat package.json)).version"); cd generated-dockerfiles/debian/10.5.0-debian && docker push godaddy/node:10.5.0-debian-$version;
 
 workflows:
   version: 2
