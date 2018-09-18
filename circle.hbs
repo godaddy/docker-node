@@ -1,25 +1,33 @@
-machine:
-  services:
-    - docker
-  node:
-    version: 8.9.4
+version: 2
 
-dependencies:
-  override:
-    - docker info
-  {{#each dependencies}}
-    {{{this}}}
-  {{/each}}
-
-test:
-  override:
-    - echo "tests to be added later"
-
-deployment:
-  hub:
-    tag: /v[0-9]+(\.[0-9]+)*/
-    commands:
-      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-    {{#each deployments}}
-      {{{this}}}
+jobs:
+  build:
+    docker:
+      - image: circleci/node:8.9.4  # Only used to get version property from package.json object
+    steps:
+      - checkout
+      - setup_remote_docker
+    {{#each dependencies}}
+      - run: {{{this}}}
     {{/each}}
+
+  deploy:
+    docker:
+      - image: circleci/node:8.9.4  # Only used to get version property from package.json object
+    filters:
+      tags:
+        only: /v[0-9]+(\.[0-9]+)*/
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run: docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+    {{#each deployments}}
+      - run: {{{this}}}
+    {{/each}}
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
+      - deploy
