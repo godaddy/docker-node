@@ -3,10 +3,10 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8.9.4
+      - image: circleci/node:8.9.4  # Only used to get version property from package.json object
     steps:
-      - setup_remote_docker
       - checkout
+      - setup_remote_docker
       - run: version=$(node -p "($(cat package.json)).version"); cd generated-dockerfiles/alpine/8.11.3-alpine && docker build -t godaddy/node:8.11.3-alpine-$version .;
       - run: version=$(node -p "($(cat package.json)).version"); cd generated-dockerfiles/alpine/10.5.0-alpine && docker build -t godaddy/node:10.5.0-alpine-$version .;
       - run: version=$(node -p "($(cat package.json)).version"); cd generated-dockerfiles/debian/8.11.3-debian && docker build -t godaddy/node:8.11.3-debian-$version .;
@@ -14,13 +14,14 @@ jobs:
 
   deploy:
     docker:
-      - image: circleci/node:8.9.4
+      - image: circleci/node:8.9.4  # Only used to get version property from package.json object
     filters:
       tags:
         only: /v[0-9]+(\.[0-9]+)*/
     steps:
       - checkout
       - setup_remote_docker
+      - run: docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
       - run: version=$(node -p "($(cat package.json)).version"); cd generated-dockerfiles/alpine/8.11.3-alpine && docker push godaddy/node:8.11.3-alpine-$version;
       - run: version=$(node -p "($(cat package.json)).version"); cd generated-dockerfiles/alpine/10.5.0-alpine && docker push godaddy/node:10.5.0-alpine-$version;
       - run: version=$(node -p "($(cat package.json)).version"); cd generated-dockerfiles/debian/8.11.3-debian && docker push godaddy/node:8.11.3-debian-$version;
