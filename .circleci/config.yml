@@ -10,7 +10,11 @@ jobs:
       - run:
           name: get docker-node version
           command: echo 'export version=$(node -p "($(cat package.json)).version")' >> $BASH_ENV
-      - run: cd generated-dockerfiles/alpine/8.11.3-alpine && docker build -t godaddy/node:8.11.3-alpine-$version .;
+      - run:
+          name: build 8.11.3-alpine
+          command: |
+            cd generated-dockerfiles/alpine/8.11.3-alpine
+            docker build -t godaddy/node:8.11.3-alpine-$version .;
       - run: cd generated-dockerfiles/alpine/10.5.0-alpine && docker build -t godaddy/node:10.5.0-alpine-$version .;
       - run: cd generated-dockerfiles/debian/8.11.3-debian && docker build -t godaddy/node:8.11.3-debian-$version .;
       - run: cd generated-dockerfiles/debian/10.5.0-debian && docker build -t godaddy/node:10.5.0-debian-$version .;
