@@ -21,7 +21,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run: docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
       - run: version=$(node -p "($(cat package.json)).version"); cd generated-dockerfiles/alpine/8.11.3-alpine && docker push godaddy/node:8.11.3-alpine-$version;
       - run: version=$(node -p "($(cat package.json)).version"); cd generated-dockerfiles/alpine/10.5.0-alpine && docker push godaddy/node:10.5.0-alpine-$version;
       - run: version=$(node -p "($(cat package.json)).version"); cd generated-dockerfiles/debian/8.11.3-debian && docker push godaddy/node:8.11.3-debian-$version;
