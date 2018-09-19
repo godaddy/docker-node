@@ -14,7 +14,9 @@ jobs:
           name: build 8.11.3-alpine
           command: |
             cd generated-dockerfiles/alpine/8.11.3-alpine
-            docker build -t godaddy/node:8.11.3-alpine-$version .;
+            docker build -f Dockerfile.static -t godaddy/node:8.11.3-alpine-$version .
+            mkdir -p docker-cache
+            docker save -o docker-cache/built-image.tar godaddy/node:8.11.3-alpine-$version
       - run: cd generated-dockerfiles/alpine/10.5.0-alpine && docker build -t godaddy/node:10.5.0-alpine-$version .;
       - run: cd generated-dockerfiles/debian/8.11.3-debian && docker build -t godaddy/node:8.11.3-debian-$version .;
       - run: cd generated-dockerfiles/debian/10.5.0-debian && docker build -t godaddy/node:10.5.0-debian-$version .;
@@ -29,10 +31,17 @@ jobs:
       - checkout
       - setup_remote_docker
       - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
-      - run: version=$(node -p "($(cat package.json)).version"); cd generated-dockerfiles/alpine/8.11.3-alpine && docker push godaddy/node:8.11.3-alpine-$version;
-      - run: version=$(node -p "($(cat package.json)).version"); cd generated-dockerfiles/alpine/10.5.0-alpine && docker push godaddy/node:10.5.0-alpine-$version;
-      - run: version=$(node -p "($(cat package.json)).version"); cd generated-dockerfiles/debian/8.11.3-debian && docker push godaddy/node:8.11.3-debian-$version;
-      - run: version=$(node -p "($(cat package.json)).version"); cd generated-dockerfiles/debian/10.5.0-debian && docker push godaddy/node:10.5.0-debian-$version;
+      - run:
+          name: get docker-node version
+          command: echo 'export version=$(node -p "($(cat package.json)).version")' >> $BASH_ENV
+      - run:
+          name: deploy 8.11.3-alpine
+          command: |
+            cd generated-dockerfiles/alpine/8.11.3-alpine
+            docker push godaddy/node:8.11.3-alpine-$version
+      - run: cd generated-dockerfiles/alpine/10.5.0-alpine && docker push godaddy/node:10.5.0-alpine-$version;
+      - run: cd generated-dockerfiles/debian/8.11.3-debian && docker push godaddy/node:8.11.3-debian-$version;
+      - run: cd generated-dockerfiles/debian/10.5.0-debian && docker push godaddy/node:10.5.0-debian-$version;
 
 workflows:
   version: 2
