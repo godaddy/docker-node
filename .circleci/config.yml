@@ -17,6 +17,8 @@ jobs:
             docker build -t godaddy/node:8.11.3-alpine-$version .
             mkdir -p docker-cache
             docker save -o docker-cache/built-image.tar godaddy/node:8.11.3-alpine-$version
+            ls -a
+            ls -a docker-cache
       - run: cd generated-dockerfiles/alpine/10.5.0-alpine && docker build -t godaddy/node:10.5.0-alpine-$version .;
       - run: cd generated-dockerfiles/debian/8.11.3-debian && docker build -t godaddy/node:8.11.3-debian-$version .;
       - run: cd generated-dockerfiles/debian/10.5.0-debian && docker build -t godaddy/node:10.5.0-debian-$version .;
