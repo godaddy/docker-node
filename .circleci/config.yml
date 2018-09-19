@@ -47,7 +47,7 @@ jobs:
           name: deploy 8.11.3-alpine
           command: |
             cd generated-dockerfiles/alpine/8.11.3-alpine
-            docker load < docker-cache/8.11.3-alpine-built-image.tar
+            docker load < ~/docker-cache/8.11.3-alpine-built-image.tar
             docker push godaddy/node:8.11.3-alpine-$version
       - run: cd generated-dockerfiles/alpine/10.5.0-alpine && docker push godaddy/node:10.5.0-alpine-$version;
       - run: cd generated-dockerfiles/debian/8.11.3-debian && docker push godaddy/node:8.11.3-debian-$version;
