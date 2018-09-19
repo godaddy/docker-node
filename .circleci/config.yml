@@ -41,6 +41,9 @@ jobs:
           name: get docker-node version
           command: echo 'export version=$(node -p "($(cat package.json)).version")' >> $BASH_ENV
       - run:
+          name: docker login
+          command: docker login -u $DOCKER_USER -p $DOCKER_PASS
+      - run:
           name: deploy 8.11.3-alpine
           command: |
             cd generated-dockerfiles/alpine/8.11.3-alpine
