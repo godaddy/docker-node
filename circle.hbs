@@ -3,26 +3,40 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8.9.4  # Only used to get version property from package.json object
+      - image: circleci/node:8.9.4  # Node is used to get version property from package.json object
     steps:
       - checkout
       - setup_remote_docker
+      - run:
+          name: get docker-node version
+          command: echo 'export version=$(node -p "($(cat package.json)).version")' >> $BASH_ENV
+      - run: mkdir -p ~/project/docker_images
     {{#each dependencies}}
-      - run: {{{this}}}
+      - run:{{{this}}}
     {{/each}}
+      - persist_to_workspace:
+          root: docker_images
+          paths: ./*
 
   deploy:
     docker:
-      - image: circleci/node:8.9.4  # Only used to get version property from package.json object
+      - image: circleci/node:8.9.4  # Node is used to get version property from package.json object
     filters:
       tags:
         only: /v[0-9]+(\.[0-9]+)*/
     steps:
       - checkout
       - setup_remote_docker
-      - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
+      - attach_workspace:
+          at: docker_images
+      - run:
+          name: get docker-node version
+          command: echo 'export version=$(node -p "($(cat package.json)).version")' >> $BASH_ENV
+      - run:
+          name: docker login
+          command: docker login -u $DOCKER_USER -p $DOCKER_PASS
     {{#each deployments}}
-      - run: {{{this}}}
+      - run:{{{this}}}
     {{/each}}
 
 workflows:
@@ -30,4 +44,6 @@ workflows:
   build-deploy:
     jobs:
       - build
-      - deploy
+      - deploy:
+          requires:
+            - build

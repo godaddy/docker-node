@@ -3,7 +3,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8.9.4  # Node used to get version property from package.json object
+      - image: circleci/node:8.9.4  # Node is used to get version property from package.json object
     steps:
       - checkout
       - setup_remote_docker
@@ -41,7 +41,7 @@ jobs:
 
   deploy:
     docker:
-      - image: circleci/node:8.9.4  # Node used to get version property from package.json object
+      - image: circleci/node:8.9.4  # Node is used to get version property from package.json object
     filters:
       tags:
         only: /v[0-9]+(\.[0-9]+)*/
