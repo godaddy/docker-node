@@ -30,9 +30,9 @@ jobs:
             docker build -t godaddy/node:8.11.3-debian-$version .
             docker save -o ~/project/docker_images/8.11.3-debian-built-image.tar godaddy/node:8.11.3-debian-$version
       - run:
-          name: build 10.5.0-alpine
+          name: build 10.5.0-debian
           command: |
-            cd generated-dockerfiles/debian/10.5.0-alpine
+            cd generated-dockerfiles/debian/10.5.0-debian
             docker build -t godaddy/node:10.5.0-debian-$version .
             docker save -o ~/project/docker_images/10.5.0-debian-built-image.tar godaddy/node:10.5.0-debian-$version
       - persist_to_workspace:
@@ -71,7 +71,7 @@ jobs:
       - run:
           name: deploy 8.11.3-debian
           command: |
-            cd generated-dockerfiles/alpine/8.11.3-debian
+            cd generated-dockerfiles/debian/8.11.3-debian
             docker load < ~/project/docker_images/8.11.3-debian-built-image.tar
             docker push godaddy/node:8.11.3-debian-$version
       - run:
