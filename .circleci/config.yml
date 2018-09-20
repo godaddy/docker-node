@@ -16,6 +16,9 @@ jobs:
           command: |
             cd generated-dockerfiles/alpine/8.11.3-alpine
             docker build -t godaddy/node:8.11.3-alpine-$version .
+            ls -a /
+            ls -a /home
+            ls -a /home/circleci
             ls -a /var/lib
             ls -a /var/lib/docker
       # - run: cd generated-dockerfiles/alpine/10.5.0-alpine && docker build -t godaddy/node:10.5.0-alpine-$version .;
