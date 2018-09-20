@@ -31,11 +31,15 @@ jobs:
       tags:
         only: /v[0-9]+(\.[0-9]+)*/
     steps:
+      - run: pwd; ls -a
       - checkout
+      -run: pwd; ls -a
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
           at: workspace
+      -run: pwd; ls -a
       - setup_remote_docker
+      -run: pwd; ls -a
       - run:
           name: get docker-node version
           command: echo 'export version=$(node -p "($(cat package.json)).version")' >> $BASH_ENV
