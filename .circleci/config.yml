@@ -31,10 +31,10 @@ jobs:
       tags:
         only: /v[0-9]+(\.[0-9]+)*/
     steps:
+      - checkout
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
           at: workspace
-      - checkout
       - setup_remote_docker
       - run:
           name: get docker-node version
