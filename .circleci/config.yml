@@ -20,6 +20,8 @@ jobs:
       - run: cd generated-dockerfiles/alpine/10.5.0-alpine && docker build -t godaddy/node:10.5.0-alpine-$version .;
       - run: cd generated-dockerfiles/debian/8.11.3-debian && docker build -t godaddy/node:8.11.3-debian-$version .;
       - run: cd generated-dockerfiles/debian/10.5.0-debian && docker build -t godaddy/node:10.5.0-debian-$version .;
+      - run: pwd; ls -a
+      - run: cd ~; pwd; ls -a
       - persist_to_workspace:
           root: docker_images
           paths: ./*
