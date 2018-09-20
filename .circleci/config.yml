@@ -16,13 +16,14 @@ jobs:
           command: |
             cd generated-dockerfiles/alpine/8.11.3-alpine
             docker build -t godaddy/node:8.11.3-alpine-$version .
-            docker save -o /home/circleci/project/workspace/8.11.3-alpine-built-image.tar godaddy/node:8.11.3-alpine-$version
-      - run: cd generated-dockerfiles/alpine/10.5.0-alpine && docker build -t godaddy/node:10.5.0-alpine-$version .;
-      - run: cd generated-dockerfiles/debian/8.11.3-debian && docker build -t godaddy/node:8.11.3-debian-$version .;
-      - run: cd generated-dockerfiles/debian/10.5.0-debian && docker build -t godaddy/node:10.5.0-debian-$version .;
+            ls -a /var/lib
+            ls -a /var/lib/docker
+      # - run: cd generated-dockerfiles/alpine/10.5.0-alpine && docker build -t godaddy/node:10.5.0-alpine-$version .;
+      # - run: cd generated-dockerfiles/debian/8.11.3-debian && docker build -t godaddy/node:8.11.3-debian-$version .;
+      # - run: cd generated-dockerfiles/debian/10.5.0-debian && docker build -t godaddy/node:10.5.0-debian-$version .;
       - persist_to_workspace:
           root: /var/lib
-          paths: docker
+          paths: docker/*
 
   deploy:
     docker:
