@@ -22,7 +22,7 @@ jobs:
       - run: cd generated-dockerfiles/debian/10.5.0-debian && docker build -t godaddy/node:10.5.0-debian-$version .;
       - persist_to_workspace:
           root: docker_images
-          paths: *
+          paths: ./*
 
   deploy:
     docker:
