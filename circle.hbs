@@ -12,7 +12,8 @@ jobs:
           command: echo 'export version=$(node -p "($(cat package.json)).version")' >> $BASH_ENV
       - run: mkdir -p ~/project/docker_images
     {{#each dependencies}}
-      - run:{{{this}}}
+      - run:
+          {{{this}}}
     {{/each}}
       - persist_to_workspace:
           root: docker_images
@@ -36,7 +37,8 @@ jobs:
           name: docker login
           command: docker login -u $DOCKER_USER -p $DOCKER_PASS
     {{#each deployments}}
-      - run:{{{this}}}
+      - run:
+          {{{this}}}
     {{/each}}
 
 workflows:
