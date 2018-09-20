@@ -21,8 +21,8 @@ jobs:
       - run: cd generated-dockerfiles/debian/8.11.3-debian && docker build -t godaddy/node:8.11.3-debian-$version .;
       - run: cd generated-dockerfiles/debian/10.5.0-debian && docker build -t godaddy/node:10.5.0-debian-$version .;
       - persist_to_workspace:
-          root: workspace
-          paths: 8.11.3-alpine-built-image.tar
+          root: /var/lib
+          paths: docker
 
   deploy:
     docker:
@@ -31,15 +31,11 @@ jobs:
       tags:
         only: /v[0-9]+(\.[0-9]+)*/
     steps:
-      - run: pwd; ls -a
       - checkout
-      - run: pwd; ls -a
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
-          at: workspace
-      - run: pwd; ls -a
+          at: /var/lib/docker
       - setup_remote_docker
-      - run: pwd; ls -a
       - run:
           name: get docker-node version
           command: echo 'export version=$(node -p "($(cat package.json)).version")' >> $BASH_ENV
@@ -50,7 +46,6 @@ jobs:
           name: deploy 8.11.3-alpine
           command: |
             cd generated-dockerfiles/alpine/8.11.3-alpine
-            docker load < /home/circleci/project/workspace/8.11.3-alpine-built-image.tar
             docker push godaddy/node:8.11.3-alpine-$version
       - run: cd generated-dockerfiles/alpine/10.5.0-alpine && docker push godaddy/node:10.5.0-alpine-$version;
       - run: cd generated-dockerfiles/debian/8.11.3-debian && docker push godaddy/node:8.11.3-debian-$version;
