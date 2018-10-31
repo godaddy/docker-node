@@ -1,4 +1,4 @@
-FROM node:10.5.0-alpine
+FROM node:10.11.0-alpine
 
 ENV NPM_CONFIG_LOGLEVEL=warn
 ENV NODE_ENV=dev
