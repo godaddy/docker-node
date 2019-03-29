@@ -12,29 +12,29 @@ jobs:
           command: echo 'export version=$(node -p "($(cat package.json)).version")' >> $BASH_ENV
       - run: mkdir -p ~/project/docker_images
       - run:
-          name: build 8.12.0-alpine
+          name: build 8.15.1-alpine
           command: |
-            cd generated-dockerfiles/alpine/8.12.0-alpine
-            docker build -t godaddy/node:8.12.0-alpine-$version .
-            docker save -o ~/project/docker_images/8.12.0-alpine-built-image.tar godaddy/node:8.12.0-alpine-$version
+            cd generated-dockerfiles/alpine/8.15.1-alpine
+            docker build -t godaddy/node:8.15.1-alpine-$version .
+            docker save -o ~/project/docker_images/8.15.1-alpine-built-image.tar godaddy/node:8.15.1-alpine-$version
       - run:
-          name: build 10.11.0-alpine
+          name: build 10.15.3-alpine
           command: |
-            cd generated-dockerfiles/alpine/10.11.0-alpine
-            docker build -t godaddy/node:10.11.0-alpine-$version .
-            docker save -o ~/project/docker_images/10.11.0-alpine-built-image.tar godaddy/node:10.11.0-alpine-$version
+            cd generated-dockerfiles/alpine/10.15.3-alpine
+            docker build -t godaddy/node:10.15.3-alpine-$version .
+            docker save -o ~/project/docker_images/10.15.3-alpine-built-image.tar godaddy/node:10.15.3-alpine-$version
       - run:
-          name: build 8.12.0-debian
+          name: build 8.15.1-debian
           command: |
-            cd generated-dockerfiles/debian/8.12.0-debian
-            docker build -t godaddy/node:8.12.0-debian-$version .
-            docker save -o ~/project/docker_images/8.12.0-debian-built-image.tar godaddy/node:8.12.0-debian-$version
+            cd generated-dockerfiles/debian/8.15.1-debian
+            docker build -t godaddy/node:8.15.1-debian-$version .
+            docker save -o ~/project/docker_images/8.15.1-debian-built-image.tar godaddy/node:8.15.1-debian-$version
       - run:
-          name: build 10.11.0-debian
+          name: build 10.15.3-debian
           command: |
-            cd generated-dockerfiles/debian/10.11.0-debian
-            docker build -t godaddy/node:10.11.0-debian-$version .
-            docker save -o ~/project/docker_images/10.11.0-debian-built-image.tar godaddy/node:10.11.0-debian-$version
+            cd generated-dockerfiles/debian/10.15.3-debian
+            docker build -t godaddy/node:10.15.3-debian-$version .
+            docker save -o ~/project/docker_images/10.15.3-debian-built-image.tar godaddy/node:10.15.3-debian-$version
       - persist_to_workspace:
           root: docker_images
           paths: ./*
@@ -57,29 +57,29 @@ jobs:
           name: docker login
           command: docker login -u $DOCKER_USER -p $DOCKER_PASS
       - run:
-          name: deploy 8.12.0-alpine
+          name: deploy 8.15.1-alpine
           command: |
-            cd generated-dockerfiles/alpine/8.12.0-alpine
-            docker load < ~/project/docker_images/8.12.0-alpine-built-image.tar
-            docker push godaddy/node:8.12.0-alpine-$version
+            cd generated-dockerfiles/alpine/8.15.1-alpine
+            docker load < ~/project/docker_images/8.15.1-alpine-built-image.tar
+            docker push godaddy/node:8.15.1-alpine-$version
       - run:
-          name: deploy 10.11.0-alpine
+          name: deploy 10.15.3-alpine
           command: |
-            cd generated-dockerfiles/alpine/10.11.0-alpine
-            docker load < ~/project/docker_images/10.11.0-alpine-built-image.tar
-            docker push godaddy/node:10.11.0-alpine-$version
+            cd generated-dockerfiles/alpine/10.15.3-alpine
+            docker load < ~/project/docker_images/10.15.3-alpine-built-image.tar
+            docker push godaddy/node:10.15.3-alpine-$version
       - run:
-          name: deploy 8.12.0-debian
+          name: deploy 8.15.1-debian
           command: |
-            cd generated-dockerfiles/debian/8.12.0-debian
-            docker load < ~/project/docker_images/8.12.0-debian-built-image.tar
-            docker push godaddy/node:8.12.0-debian-$version
+            cd generated-dockerfiles/debian/8.15.1-debian
+            docker load < ~/project/docker_images/8.15.1-debian-built-image.tar
+            docker push godaddy/node:8.15.1-debian-$version
       - run:
-          name: deploy 10.11.0-debian
+          name: deploy 10.15.3-debian
           command: |
-            cd generated-dockerfiles/debian/10.11.0-debian
-            docker load < ~/project/docker_images/10.11.0-debian-built-image.tar
-            docker push godaddy/node:10.11.0-debian-$version
+            cd generated-dockerfiles/debian/10.15.3-debian
+            docker load < ~/project/docker_images/10.15.3-debian-built-image.tar
+            docker push godaddy/node:10.15.3-debian-$version
 
 workflows:
   version: 2
