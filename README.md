@@ -1,4 +1,3 @@
-[![Join Slack](https://img.shields.io/badge/Join%20us%20on-Slack-e01563.svg)](https://godaddy-oss-slack.herokuapp.com/)
 [![CircleCI](https://circleci.com/gh/godaddy/docker-node/tree/master.svg?style=svg)](https://circleci.com/gh/godaddy/docker-node/tree/master)
 
 # docker-node
